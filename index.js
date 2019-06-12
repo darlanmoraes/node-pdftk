@@ -51,6 +51,13 @@ class PdfTk {
             this.tmpFiles = [];
 
             /**
+             * Allows the plugin to change where the temp file is written.
+             * @member
+             * @type {String}
+             */
+            this._tempDir = this._tempDir || path.join(__dirname, './node-pdftk-tmp/');
+
+            /**
              * Write a temp file and save the path for deletion later.
              * @private
              * @function
@@ -58,7 +65,7 @@ class PdfTk {
              * @returns {String} Path of the newly created temp file.
              */
             const writeTempFile = srcFile => {
-                const tmpPath = path.join(__dirname, './node-pdftk-tmp/');
+                const tmpPath = this.tempDir;
                 const uniqueId = crypto.randomBytes(16).toString('hex');
                 const tmpFile = `${tmpPath}${uniqueId}.pdf`;
                 fs.writeFileSync(tmpFile, srcFile);
@@ -1077,6 +1084,10 @@ module.exports = {
             },
             _ignoreWarnings: {
                 value: options.ignoreWarnings,
+                writable: true,
+            },
+            _tempDir: {
+                value: options.tempDir,
                 writable: true,
             },
         });
