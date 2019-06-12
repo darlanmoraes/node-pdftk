@@ -65,7 +65,7 @@ class PdfTk {
              * @returns {String} Path of the newly created temp file.
              */
             const writeTempFile = srcFile => {
-                const tmpPath = this.tempDir;
+                const tmpPath = this._tempDir;
                 const uniqueId = crypto.randomBytes(16).toString('hex');
                 const tmpFile = `${tmpPath}${uniqueId}.pdf`;
                 fs.writeFileSync(tmpFile, srcFile);
